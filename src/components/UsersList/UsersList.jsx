@@ -47,7 +47,15 @@ export const UsersList = () => {
         const arr = [...followedUsers];
         arr.splice(index, 1);
         setFollowedUsers(arr);
-    }
+    };
+
+    const handleChangingUsersArray = (id, newAmountOfFollowers) => {
+        const index = users.findIndex(user => user.id === id);
+        const user = {...users[index], followers: newAmountOfFollowers};
+        const arr = [...users];
+        arr.splice(index, 1, user);
+        setUsers(arr);
+    };
 
     return (
         <>
@@ -62,6 +70,7 @@ export const UsersList = () => {
                             avatar={user.avatar}
                             isFollowing={followedUsers.includes(user.id)}
                             handleChangingFollowersArray={handleChangingFollowersArray}
+                            handleChangingUsersArray={handleChangingUsersArray}
                         />
                     )
                 })}

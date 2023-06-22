@@ -11,3 +11,8 @@ export async function updateUserFollowers(id, newFollowers) {
     const { data } = await axios.put(`/${id}`, {followers: newFollowers});
     return data;
 };
+
+export async function getUserFollowers(id) {
+    const { data } = await axios.put(`/${id}`);
+    return data.followers;
+};
