@@ -1,7 +1,7 @@
-const breakpoints = Object.freeze({
+export const breakpoints = Object.freeze({
   mobile: '480px',
-  tablet: '768px',
-  desktop: '1200px',
+  tablet: '880px',
+  desktop: '1260px',
 });
 
 //desktop-first
