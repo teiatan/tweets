@@ -1,21 +1,10 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Button, Avatar, Info } from './UserCard.styled';
 
-export const UserCard = ({tweets, followers, avatar, id, followedUsers, setFollowedUsers}) => {
-  const [isFollowing, setIsFollowing] = useState(()=>followedUsers.includes(id));
+export const UserCard = ({tweets, followers, avatar, id, isFollowing, handleChangingFollowersArray}) => {
 
   const handleFollowClick = () => {
-    const isInArray = followedUsers.includes(id);
-    if(!isInArray){
-      setFollowedUsers([...followedUsers, id]);
-      setIsFollowing(true);
-    } else {
-      const index = followedUsers.indexOf(id);
-      followedUsers.splice(index, 1);
-      setFollowedUsers(followedUsers);
-      setIsFollowing(false);
-    };
+    handleChangingFollowersArray(id);
   };
   return (
     <Container>

@@ -11,12 +11,21 @@ export const UsersList = () => {
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
+    const usersPerpage = 6;
+
     useEffect(()=>{
-        console.log('set storae');
         window.localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
     }, [followedUsers]);
 
-    const usersPerpage = 6;
+    useEffect(()=>{
+        setIsLoading(true);
+        getUsers(1, usersPerpage).then(res => {
+            setUsers(res);
+            setIsLoading(false);
+        }).catch(error => {
+            console.log(error);
+        });
+    }, []);
 
     const handleLoadMore = () => {
         setPage(page+1);
@@ -29,15 +38,16 @@ export const UsersList = () => {
         });
     };
 
-    useEffect(()=>{
-        setIsLoading(true);
-        getUsers(1, usersPerpage).then(res => {
-            setUsers(res);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log(error);
-        });
-    }, []);
+    const handleChangingFollowersArray = (id) => {
+        if(!followedUsers.includes(id)){
+            setFollowedUsers([...followedUsers, id]);
+            return;
+        };
+        const index = followedUsers.indexOf(id);
+        const arr = [...followedUsers];
+        arr.splice(index, 1);
+        setFollowedUsers(arr);
+    }
 
     return (
         <>
@@ -50,8 +60,8 @@ export const UsersList = () => {
                             tweets={user.tweets}
                             followers={user.followers}
                             avatar={user.avatar}
-                            followedUsers={followedUsers}
-                            setFollowedUsers={setFollowedUsers}
+                            isFollowing={followedUsers.includes(user.id)}
+                            handleChangingFollowersArray={handleChangingFollowersArray}
                         />
                     )
                 })}
