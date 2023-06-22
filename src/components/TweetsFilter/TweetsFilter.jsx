@@ -13,6 +13,7 @@ export const TweetsFilter = () => {
         setIsFilterOpen(false);
         setChoosedFilter(variant);
     };
+    
     return (
         <Container>
             <StyledButton 
