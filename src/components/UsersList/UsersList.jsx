@@ -7,8 +7,14 @@ import { Loader } from "components/Loader/Loader";
 export const UsersList = () => {
 
     const [users, setUsers] = useState([]);
+    const [followedUsers, setFollowedUsers] = useState(() => JSON.parse(window.localStorage.getItem('followedUsers')) ?? []);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(()=>{
+        console.log('set storae');
+        window.localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
+    }, [followedUsers]);
 
     const usersPerpage = 6;
 
@@ -17,7 +23,6 @@ export const UsersList = () => {
         setIsLoading(true);
         getUsers(page+1, usersPerpage).then(res => {
             setUsers([...users, ...res]);
-            console.log('fetch load more');
             setIsLoading(false);
         }).catch(error => {
             console.log(error);
@@ -41,9 +46,12 @@ export const UsersList = () => {
                     return(
                         <UserCard 
                             key={user.id}
+                            id={user.id}
                             tweets={user.tweets}
                             followers={user.followers}
                             avatar={user.avatar}
+                            followedUsers={followedUsers}
+                            setFollowedUsers={setFollowedUsers}
                         />
                     )
                 })}
