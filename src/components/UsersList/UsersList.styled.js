@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { device } from "utils/mediaQueries";
 
 export const CardsContainer = styled.ul`
-  padding-top: 80px;
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -30,4 +30,7 @@ export const LoadMoreButton = styled.button`
             #5736a3 54.28%,
             #4b2a99 78.99%);;
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
+  :hover {
+    background: #281F76;
+  }
 `;

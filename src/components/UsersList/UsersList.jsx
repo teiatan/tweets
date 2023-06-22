@@ -78,6 +78,5 @@ export const UsersList = () => {
             {isLoading && <Loader />}
             {(page<(100/usersPerpage)) && !isLoading && <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>}
         </>
-
     )
 };
