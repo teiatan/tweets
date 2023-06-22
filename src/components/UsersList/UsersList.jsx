@@ -43,18 +43,18 @@ export const UsersList = () => {
             setFollowedUsers([...followedUsers, id]);
             return;
         };
-        const index = followedUsers.indexOf(id);
-        const arr = [...followedUsers];
-        arr.splice(index, 1);
-        setFollowedUsers(arr);
+        const followerIndex = followedUsers.indexOf(id);
+        const newFollowedUsersArray = [...followedUsers];
+        newFollowedUsersArray.splice(followerIndex, 1);
+        setFollowedUsers(newFollowedUsersArray);
     };
 
     const handleChangingUsersArray = (id, newAmountOfFollowers) => {
-        const index = users.findIndex(user => user.id === id);
-        const user = {...users[index], followers: newAmountOfFollowers};
-        const arr = [...users];
-        arr.splice(index, 1, user);
-        setUsers(arr);
+        const userIndex = users.findIndex(user => user.id === id);
+        const updatedUser = {...users[userIndex], followers: newAmountOfFollowers};
+        const newUsersArray = [...users];
+        newUsersArray.splice(userIndex, 1, updatedUser);
+        setUsers(newUsersArray);
     };
 
     return (
@@ -74,7 +74,6 @@ export const UsersList = () => {
                         />
                     )
                 })}
-
             </CardsContainer>
             {isLoading && <Loader />}
             {(page<(100/usersPerpage)) && !isLoading && <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>}
