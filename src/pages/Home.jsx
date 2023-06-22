@@ -1,3 +1,4 @@
+import { PageContainer } from "components/PageContainer/PageContainer";
 import { useEffect } from "react";
 import { getUsers, updateUserFollowers } from "service/users";
 
@@ -16,9 +17,9 @@ const HomePage = () => {
         });
     })
     return(
-        <>
+        <PageContainer>
             <h1>Homepage</h1>
-        </>
+        </PageContainer>
     );
 };
 

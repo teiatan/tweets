@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout/Layout';
 
 function App() {
-  const HomePage = lazy(() => import('../pages/HomePage'));
-  const TweetsPage = lazy(() => import('../pages/TweetsPage'));
+  const HomePage = lazy(() => import('../pages/Home'));
+  const TweetsPage = lazy(() => import('../pages/Tweets'));
   return (
     <Routes>
     <Route path="/" element={<Layout />}>

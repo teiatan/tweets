@@ -1,11 +1,11 @@
+import { PageContainer } from "components/PageContainer/PageContainer";
 import { UsersList } from "components/UsersList/UsersList";
 
 export const TweetsPage = () => {
     return(
-        <>
-            <h1>TweetsPage</h1>
+        <PageContainer>
             <UsersList />
-        </>
+        </PageContainer>
     );
 };
 
