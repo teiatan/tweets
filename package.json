@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://teiatan.github.io/tweets/",
   "dependencies": {
+    "@emotion/css": "^11.11.2",
     "@emotion/styled": "^11.11.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

@@ -2,30 +2,35 @@ import { UserCard } from "components/UserCard/UserCard";
 import { useEffect, useState } from "react";
 import { getUsers } from "service/users";
 import { CardsContainer, LoadMoreButton } from "./UsersList.styled";
+import { Loader } from "components/Loader/Loader";
 
 export const UsersList = () => {
 
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     const usersPerpage = 6;
 
     const handleLoadMore = () => {
         setPage(page+1);
+        setIsLoading(true);
         getUsers(page+1, usersPerpage).then(res => {
             setUsers([...users, ...res]);
             console.log('fetch load more');
+            setIsLoading(false);
         }).catch(error => {
-        // handle error
+            console.log(error);
         });
     };
 
     useEffect(()=>{
-        console.log('effect');
+        setIsLoading(true);
         getUsers(1, usersPerpage).then(res => {
             setUsers(res);
+            setIsLoading(false);
         }).catch(error => {
-        // handle error
+            console.log(error);
         });
     }, []);
 
@@ -44,7 +49,8 @@ export const UsersList = () => {
                 })}
 
             </CardsContainer>
-            {(page<(100/usersPerpage)) && <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>}
+            {isLoading && <Loader />}
+            {(page<(100/usersPerpage)) && !isLoading && <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>}
         </>
 
     )
