@@ -3,8 +3,6 @@ import { CardsContainer } from "./UsersList.styled";
 
 export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers}) => {
 
-    
-
     const handleChangingFollowersArray = (id) => {
         if(!followedUsers.includes(id)){
             setFollowedUsers([...followedUsers, id]);

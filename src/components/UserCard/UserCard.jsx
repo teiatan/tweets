@@ -5,15 +5,12 @@ import { getUserFollowers, updateUserFollowers } from 'service/users';
 export const UserCard = ({tweets, followers, avatar, id, isFollowing, handleChangingFollowersArray, handleChangingUsersArray}) => {
 
   const handleFollowClick = async () => {
-    handleChangingFollowersArray(id);
     const followersFromApi = await getUserFollowers(id);
-    if(isFollowing) {
-      updateUserFollowers(id, followersFromApi-1)
-      handleChangingUsersArray(id, followersFromApi-1)
-    } else {
-      updateUserFollowers(id, followersFromApi+1)
-      handleChangingUsersArray(id, followersFromApi+1)
-    }
+    const newFollowersAmount = isFollowing ? followersFromApi-1 : followersFromApi+1;
+    updateUserFollowers(id, newFollowersAmount);
+    handleChangingFollowersArray(id);
+    handleChangingUsersArray(id, newFollowersAmount);
+    
   };
   return (
     <Container>
