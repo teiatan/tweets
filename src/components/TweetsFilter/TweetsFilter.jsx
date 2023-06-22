@@ -8,6 +8,11 @@ export const TweetsFilter = () => {
     const [choosedFilter, setChoosedFilter] = useState('filter')
 
     const filterVariants = ['show all', 'follow', 'followings']
+
+    const handleFilterOptionClick = (variant) => {
+        setIsFilterOpen(false);
+        setChoosedFilter(variant);
+    };
     return (
         <Container>
             <StyledButton 
@@ -23,7 +28,12 @@ export const TweetsFilter = () => {
             {isFilterOpen && <StyledList>
                 {filterVariants.map(variant => {
                     return (
-                        <StyledItem key={variant}>{variant}</StyledItem>
+                        <StyledItem 
+                            key={variant}
+                            onClick={()=>handleFilterOptionClick(variant)}
+                        >
+                                {variant}
+                        </StyledItem>
                     )
                 })}
             </StyledList>}
