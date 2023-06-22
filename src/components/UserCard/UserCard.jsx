@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Button, Avatar, Info } from './UserCard.styled';
 
 export const UserCard = ({tweets, followers, avatar}) => {
@@ -22,4 +23,10 @@ export const UserCard = ({tweets, followers, avatar}) => {
       </Button>
     </Container>
   );
+};
+
+UserCard.propTypes = {
+  tweets: PropTypes.number, 
+  followers: PropTypes.number, 
+  avatar: PropTypes.string
 };
