@@ -1,12 +1,16 @@
 import { UserCard } from "components/UserCard/UserCard";
 import { CardsContainer } from "./UsersList.styled";
-import { getArrayAfterTogglingItem } from "utils/getArrayAfterTogglingItem";
+import { getObjectsArrayAfterTogglingItem } from "utils/getArrayAfterTogglingItem";
 import { updateSessionFollowers } from "service/sessions";
 
 export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, sessionId}) => {
 
-    const handleChangingFollowersArray = (id) => {
-        const newFollowedUsersArray = getArrayAfterTogglingItem(followedUsers, id);
+    const handleChangingFollowersArray = async(id, user) => {
+        // const newFollowedUsersArray = getStringsArrayAfterTogglingItem(followedUsers, id);
+        // setFollowedUsers(newFollowedUsersArray);
+        // updateSessionFollowers(sessionId, newFollowedUsersArray);
+
+        const newFollowedUsersArray = getObjectsArrayAfterTogglingItem(followedUsers, id, user);
         setFollowedUsers(newFollowedUsersArray);
         updateSessionFollowers(sessionId, newFollowedUsersArray);
     };
@@ -29,7 +33,7 @@ export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, ses
                         tweets={user.tweets}
                         followers={user.followers}
                         avatar={user.avatar}
-                        isFollowing={followedUsers.includes(user.id)}
+                        isFollowing={followedUsers.flatMap(user => user.id).includes(user.id)}
                         handleChangingFollowersArray={handleChangingFollowersArray}
                         handleChangingUsersArray={handleChangingUsersArray}
                     />
