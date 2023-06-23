@@ -8,8 +8,10 @@ import { getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
 import { Link } from "react-router-dom";
+import { setNewSession } from "service/sessions";
 
 export const TweetsPage = () => {
+    const [sessionId, setSessionId] = useState(() => JSON.parse(window.localStorage.getItem('sessionId')) ?? '');
     const [users, setUsers] = useState([]);
     const [followedUsers, setFollowedUsers] = useState(() => JSON.parse(window.localStorage.getItem('followedUsers')) ?? []);
     const [page, setPage] = useState(1);
@@ -22,6 +24,10 @@ export const TweetsPage = () => {
     }, [followedUsers]);
 
     useEffect(()=>{
+        window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
+    }, [sessionId]);
+
+    useEffect(()=>{
         setIsLoading(true);
         getUsers(1, usersPerpage).then(res => {
             setUsers(res);
@@ -30,6 +36,17 @@ export const TweetsPage = () => {
             console.log(error);
         });
     }, []);
+
+    useEffect(()=>{
+        if(sessionId === ''){
+            setNewSession().then(res => {
+                setSessionId(res.id);
+                console.log(res);
+            }).catch(error => {
+                console.log(error);
+            });
+        };
+    }, [sessionId]);
 
     const handleLoadMore = () => {
         setPage(page+1);
@@ -42,23 +59,37 @@ export const TweetsPage = () => {
         });
     };
 
+    const getFollowingUsers = async () => {
+        
+    };
+
     return(
         <PageContainer>
+
             <HandleBar>
                <Link to='/'><GoBackButton>
                     <TbArrowBack color='#EBD8FF'/>
                     Go back
                 </GoBackButton></Link>
-                <TweetsFilter />
+                <TweetsFilter getFollowingUsers={getFollowingUsers}/>
             </HandleBar>   
+
             <UsersList 
                 users={users}
                 setUsers={setUsers}
                 followedUsers={followedUsers}
                 setFollowedUsers={setFollowedUsers}
+                sessionId={setSessionId}
             />
+
             {isLoading && <Loader />}
-            {(page<(100/usersPerpage)) && !isLoading && <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>}
+
+            {(page<(100/usersPerpage)) && !isLoading && 
+                <LoadMoreButton onClick={handleLoadMore}>
+                    Load more
+                </LoadMoreButton>
+            }
+
         </PageContainer>
     );
 };

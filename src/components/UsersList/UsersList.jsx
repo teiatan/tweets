@@ -1,16 +1,19 @@
 import { UserCard } from "components/UserCard/UserCard";
 import { CardsContainer } from "./UsersList.styled";
+import { getArrayAfterTogglingItem } from "utils/getArrayAfterTogglingItem";
 
-export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers}) => {
+export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, setSessionId}) => {
 
     const handleChangingFollowersArray = (id) => {
-        if(!followedUsers.includes(id)){
-            setFollowedUsers([...followedUsers, id]);
-            return;
-        };
-        const followerIndex = followedUsers.indexOf(id);
-        const newFollowedUsersArray = [...followedUsers];
-        newFollowedUsersArray.splice(followerIndex, 1);
+        // if(!followedUsers.includes(id)){
+        //     setFollowedUsers([...followedUsers, id]);
+        //     return;
+        // };
+        // const followerIndex = followedUsers.indexOf(id);
+        // const newFollowedUsersArray = [...followedUsers];
+        // newFollowedUsersArray.splice(followerIndex, 1);
+        // setFollowedUsers(newFollowedUsersArray);
+        const newFollowedUsersArray = getArrayAfterTogglingItem(followedUsers, id);
         setFollowedUsers(newFollowedUsersArray);
     };
 
@@ -35,6 +38,7 @@ export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers}) =>
                         isFollowing={followedUsers.includes(user.id)}
                         handleChangingFollowersArray={handleChangingFollowersArray}
                         handleChangingUsersArray={handleChangingUsersArray}
+                        setSessionId={setSessionId}
                     />
                 )
             })}

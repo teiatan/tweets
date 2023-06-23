@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Container, Button, Avatar, Info } from './UserCard.styled';
 import { getUserFollowers, updateUserFollowers } from 'service/users';
 
-export const UserCard = ({tweets, followers, avatar, id, isFollowing, handleChangingFollowersArray, handleChangingUsersArray}) => {
+export const UserCard = ({tweets, followers, avatar, id, isFollowing, handleChangingFollowersArray, handleChangingUsersArray, setSessionId}) => {
 
   const handleFollowClick = async () => {
     const followersFromApi = await getUserFollowers(id);
