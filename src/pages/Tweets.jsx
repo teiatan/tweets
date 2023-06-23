@@ -28,8 +28,8 @@ export const TweetsPage = () => {
     useEffect(()=>{
         if(query === "" || query === "show all") {
             setIsLoading(true);
-            getUsers(1, usersPerpage).then(res => {
-                setUsers(res);
+            getUsers(page, usersPerpage).then(res => {
+                setUsers((prev) => ([...prev, ...res]));
                 setIsLoading(false);
             }).catch(error => {
                 console.log(error);
@@ -37,18 +37,20 @@ export const TweetsPage = () => {
         };
 
         if(query === "followings") {
-            setUsers(followedUsers);
+            const arr = followedUsers.slice((page-1)*usersPerpage, (page-1)*usersPerpage+usersPerpage);
+            setUsers((prev) => ([...prev, ...arr]));
             setIsLoading(false);
         };
 
         if(query === "follow") {
             getAllUsers().then(res => {
-                const arr = res.filter(user => !user.followersArray.includes(sessionId));
-                setUsers(arr);
+                const all = res.filter(user => !user.followersArray.includes(sessionId));
+                const arr = all.slice((page-1)*usersPerpage, (page-1)*usersPerpage+usersPerpage);
+                setUsers((prev) => ([...prev, ...arr]));
                 setIsLoading(false);
             })
         };
-    }, [query, followedUsers, sessionId]);
+    }, [query, followedUsers, sessionId, usersPerpage, page]);
 
     useEffect(()=>{
         if(sessionId === ''){
@@ -75,17 +77,17 @@ export const TweetsPage = () => {
     const handleLoadMore = () => {
         setPage(page+1);
         setIsLoading(true);
-        getUsers(page+1, usersPerpage).then(res => {
-            setUsers([...users, ...res]);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log(error);
-        });
+        // getUsers(page+1, usersPerpage).then(res => {
+        //     setUsers([...users, ...res]);
+        //     setIsLoading(false);
+        // }).catch(error => {
+        //     console.log(error);
+        // });
     };
 
     const filterUsers = async (filter) => {
         setPage(1);
-        //setUsers([]);
+        setUsers([]);
         setIsLoading(true);
         updateQueryString(filter);
     };
