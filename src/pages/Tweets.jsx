@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { getSessionFollowers, setNewSession } from "service/sessions";
 
 export const TweetsPage = () => {
@@ -16,6 +16,9 @@ export const TweetsPage = () => {
     const [followedUsers, setFollowedUsers] = useState([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get('query') || "";
+    console.log(query);
 
     const usersPerpage = 6;
 
@@ -51,6 +54,11 @@ export const TweetsPage = () => {
         };
     }, [sessionId]);
 
+    const updateQueryString = (query) => {
+        const nextParams = query !== "" ? { query } : {};
+        setSearchParams(nextParams);
+    };
+
     const handleLoadMore = () => {
         setPage(page+1);
         setIsLoading(true);
@@ -65,6 +73,7 @@ export const TweetsPage = () => {
     const filterUsers = async (filter) => {
         setPage(1);
         setIsLoading(true);
+        updateQueryString(filter);
         switch (filter) {
             case 'show all':
                 getUsers(1, usersPerpage).then(res => {
