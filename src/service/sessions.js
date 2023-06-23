@@ -6,7 +6,7 @@ export async function setNewSession() {
 }
 
 export async function getSessionFollowers(id) {
-    const { data } = await axios.put(`sessions/${id}`);
+    const { data } = await axios.get(`sessions/${id}`);
     return data;
 };
 

@@ -8,20 +8,20 @@ import { getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
 import { Link } from "react-router-dom";
-import { setNewSession } from "service/sessions";
+import { getSessionFollowers, setNewSession } from "service/sessions";
 
 export const TweetsPage = () => {
     const [sessionId, setSessionId] = useState(() => JSON.parse(window.localStorage.getItem('sessionId')) ?? '');
     const [users, setUsers] = useState([]);
-    const [followedUsers, setFollowedUsers] = useState(() => JSON.parse(window.localStorage.getItem('followedUsers')) ?? []);
+    const [followedUsers, setFollowedUsers] = useState([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
     const usersPerpage = 6;
 
-    useEffect(()=>{
-        window.localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
-    }, [followedUsers]);
+    // useEffect(()=>{
+    //     window.localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
+    // }, [followedUsers]);
 
     useEffect(()=>{
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
@@ -41,7 +41,13 @@ export const TweetsPage = () => {
         if(sessionId === ''){
             setNewSession().then(res => {
                 setSessionId(res.id);
-                console.log(res);
+                console.log('set session');
+            }).catch(error => {
+                console.log(error);
+            });
+        } else {
+            getSessionFollowers(sessionId).then(res => {
+                setFollowedUsers(res.followedUsers);
             }).catch(error => {
                 console.log(error);
             });

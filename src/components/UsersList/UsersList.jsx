@@ -6,17 +6,13 @@ import { updateUser } from "service/users";
 
 export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, sessionId}) => {
 
-    const handleChangingFollowersArray = async(id, user) => {
-        // const newFollowedUsersArray = getStringsArrayAfterTogglingItem(followedUsers, id);
-        // setFollowedUsers(newFollowedUsersArray);
-        // updateSessionFollowers(sessionId, newFollowedUsersArray);
-
+    const handleChangingSessionDB = async(id, user) => {
         const newFollowedUsersArray = getObjectsArrayAfterTogglingItem(followedUsers, id, user);
         setFollowedUsers(newFollowedUsersArray);
         updateSessionFollowers(sessionId, newFollowedUsersArray);
     };
 
-    const handleChangingUsersArray = (id, newUserData) => {
+    const handleChangingUsersDB = (id, newUserData) => {
         const userIndex = users.findIndex(user => user.id === id);
         const updatedUser = {...users[userIndex], ...newUserData};
         const newUsersArray = [...users];
@@ -36,8 +32,8 @@ export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, ses
                         followers={user.followers}
                         avatar={user.avatar}
                         isFollowing={followedUsers.flatMap(user => user.id).includes(user.id)}
-                        handleChangingFollowersArray={handleChangingFollowersArray}
-                        handleChangingUsersArray={handleChangingUsersArray}
+                        handleChangingSessionDB={handleChangingSessionDB}
+                        handleChangingUsersDB={handleChangingUsersDB}
                         sessionId={sessionId}
                     />
                 )
