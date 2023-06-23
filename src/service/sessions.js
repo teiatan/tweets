@@ -10,3 +10,8 @@ export async function getSessionFollowers(id) {
     return data;
 };
 
+export async function updateSessionFollowers(id, newFollowers) {
+    const { data } = await axios.put(`sessions/${id}`, {followedUsers: newFollowers});
+    return data;
+};
+

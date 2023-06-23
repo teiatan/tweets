@@ -79,7 +79,7 @@ export const TweetsPage = () => {
                 setUsers={setUsers}
                 followedUsers={followedUsers}
                 setFollowedUsers={setFollowedUsers}
-                sessionId={setSessionId}
+                sessionId={sessionId}
             />
 
             {isLoading && <Loader />}
