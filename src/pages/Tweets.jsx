@@ -3,7 +3,7 @@ import { TweetsFilter } from "components/TweetsFilter/TweetsFilter";
 import { UsersList } from "components/UsersList/UsersList";
 import { TbArrowBack } from 'react-icons/tb';
 import { GoBackButton, HandleBar } from "./Tweets.styled";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllUsers, getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
@@ -26,12 +26,7 @@ export const TweetsPage = () => {
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
     }, [sessionId]);
 
-    const firstRender = useRef(true);
     useEffect(()=>{
-        if(firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
         if(query === "" || query === "show all") {
             setIsLoading(true);
             getUsers(page, usersPerpage).then(res => {
@@ -44,10 +39,12 @@ export const TweetsPage = () => {
         };
 
         if(query === "followings") {
-            const arr = followedUsers.slice((page-1)*usersPerpage, (page-1)*usersPerpage+usersPerpage);
-            setUsers((prev) => ([...prev, ...arr]));
-            setIsLoading(false);
-            setTotalPages(Math.ceil(followedUsers.length/usersPerpage));
+            getSessionFollowers(sessionId).then(res => {
+                const arr = res.followedUsers.slice((page-1)*usersPerpage, (page-1)*usersPerpage+usersPerpage);
+                setUsers((prev) => ([...prev, ...arr]));
+                setIsLoading(false);
+                setTotalPages(Math.ceil(res.followedUsers.length/usersPerpage));
+            })
         };
 
         if(query === "follow") {
@@ -59,7 +56,7 @@ export const TweetsPage = () => {
                 setTotalPages(Math.ceil(all.length/usersPerpage));
             })
         };
-    }, [query, followedUsers, sessionId, usersPerpage, page]);
+    }, [query, sessionId, usersPerpage, page]);
 
     useEffect(()=>{
         if(sessionId === ''){
@@ -86,12 +83,6 @@ export const TweetsPage = () => {
     const handleLoadMore = () => {
         setPage(page+1);
         setIsLoading(true);
-        // getUsers(page+1, usersPerpage).then(res => {
-        //     setUsers([...users, ...res]);
-        //     setIsLoading(false);
-        // }).catch(error => {
-        //     console.log(error);
-        // });
     };
 
     const filterUsers = async (filter) => {
