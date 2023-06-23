@@ -3,7 +3,7 @@ import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icon
 import { Container, StyledButton, StyledItem, StyledList } from "./TweetsFilter.styled";
 
 
-export const TweetsFilter = ({getFollowingUsers}) => {
+export const TweetsFilter = ({filterUsers}) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [choosedFilter, setChoosedFilter] = useState('filter')
 
@@ -12,7 +12,7 @@ export const TweetsFilter = ({getFollowingUsers}) => {
     const handleFilterOptionClick = (variant) => {
         setIsFilterOpen(false);
         setChoosedFilter(variant);
-        getFollowingUsers();
+        filterUsers(variant);
     };
 
     return (

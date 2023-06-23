@@ -19,10 +19,6 @@ export const TweetsPage = () => {
 
     const usersPerpage = 6;
 
-    // useEffect(()=>{
-    //     window.localStorage.setItem('followedUsers', JSON.stringify(followedUsers));
-    // }, [followedUsers]);
-
     useEffect(()=>{
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
     }, [sessionId]);
@@ -50,6 +46,7 @@ export const TweetsPage = () => {
                 setFollowedUsers(res.followedUsers);
             }).catch(error => {
                 console.log(error);
+                setSessionId('');
             });
         };
     }, [sessionId]);
@@ -65,8 +62,21 @@ export const TweetsPage = () => {
         });
     };
 
-    const getFollowingUsers = async () => {
+    const filterUsers = async (filter) => {
+        switch (filter) {
+            case 'show all':
+                console.log('1');
+                break;
+            case 'follow':
+                console.log('2');
+                break;
+            case 'followings':
+                setUsers(followedUsers);
+                break;
         
+            default:
+                break;
+        }
     };
 
     return(
@@ -77,7 +87,7 @@ export const TweetsPage = () => {
                     <TbArrowBack color='#EBD8FF'/>
                     Go back
                 </GoBackButton></Link>
-                <TweetsFilter getFollowingUsers={getFollowingUsers}/>
+                <TweetsFilter filterUsers={filterUsers}/>
             </HandleBar>   
 
             <UsersList 
