@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { Container, StyledButton, StyledItem, StyledList } from "./TweetsFilter.styled";
+import { useSearchParams } from "react-router-dom";
 
 
 export const TweetsFilter = ({filterUsers}) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [choosedFilter, setChoosedFilter] = useState('filter')
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get('query') || "filter";
+    const [choosedFilter, setChoosedFilter] = useState(query);
+
 
     const filterVariants = ['show all', 'follow', 'followings']
 
