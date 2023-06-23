@@ -22,9 +22,3 @@ export async function getUserById(id) {
     return data;
 };
 
-export async function getSessionFollowers(id) {
-    const { data } = await axios.put(`sessions/${id}`);
-    return data;
-};
-
-
