@@ -27,14 +27,20 @@ export const TweetsPage = () => {
     }, [sessionId]);
 
     useEffect(()=>{
-        setIsLoading(true);
-        getUsers(1, usersPerpage).then(res => {
-            setUsers(res);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log(error);
-        });
-    }, []);
+        if(query === "") {
+            setIsLoading(true);
+            getUsers(1, usersPerpage).then(res => {
+                setUsers(res);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log(error);
+            });
+        };
+
+        if(query === "followings") {
+            setUsers(followedUsers);
+        }
+    }, [query, followedUsers]);
 
     useEffect(()=>{
         if(sessionId === ''){
