@@ -63,15 +63,23 @@ export const TweetsPage = () => {
     };
 
     const filterUsers = async (filter) => {
+        setPage(1);
+        setIsLoading(true);
         switch (filter) {
             case 'show all':
-                console.log('1');
+                getUsers(1, usersPerpage).then(res => {
+                    setUsers(res);
+                    setIsLoading(false);
+                }).catch(error => {
+                    console.log(error);
+                });
                 break;
             case 'follow':
                 console.log('2');
                 break;
             case 'followings':
                 setUsers(followedUsers);
+                setIsLoading(false);
                 break;
         
             default:
