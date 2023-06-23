@@ -2,6 +2,7 @@ import { UserCard } from "components/UserCard/UserCard";
 import { CardsContainer } from "./UsersList.styled";
 import { getObjectsArrayAfterTogglingItem } from "utils/getArrayAfterTogglingItem";
 import { updateSessionFollowers } from "service/sessions";
+import { updateUser } from "service/users";
 
 export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, sessionId}) => {
 
@@ -15,12 +16,13 @@ export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, ses
         updateSessionFollowers(sessionId, newFollowedUsersArray);
     };
 
-    const handleChangingUsersArray = (id, newAmountOfFollowers) => {
+    const handleChangingUsersArray = (id, newUserData) => {
         const userIndex = users.findIndex(user => user.id === id);
-        const updatedUser = {...users[userIndex], followers: newAmountOfFollowers};
+        const updatedUser = {...users[userIndex], ...newUserData};
         const newUsersArray = [...users];
         newUsersArray.splice(userIndex, 1, updatedUser);
         setUsers(newUsersArray);
+        updateUser(id, newUserData);
     };
 
     return (
@@ -36,6 +38,7 @@ export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, ses
                         isFollowing={followedUsers.flatMap(user => user.id).includes(user.id)}
                         handleChangingFollowersArray={handleChangingFollowersArray}
                         handleChangingUsersArray={handleChangingUsersArray}
+                        sessionId={sessionId}
                     />
                 )
             })}

@@ -22,3 +22,8 @@ export async function getUserById(id) {
     return data;
 };
 
+export async function updateUser(id, newData) {
+    const { data } = await axios.put(`users/${id}`, newData);
+    return data;
+};
+
