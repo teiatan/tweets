@@ -4,7 +4,7 @@ import { UsersList } from "components/UsersList/UsersList";
 import { TbArrowBack } from 'react-icons/tb';
 import { GoBackButton, HandleBar } from "./Tweets.styled";
 import { useEffect, useState } from "react";
-import { getUsers } from "service/users";
+import { getAllUsers, getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
 import { Link, useSearchParams } from "react-router-dom";
@@ -18,16 +18,15 @@ export const TweetsPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('query') || "";
-    console.log(query);
 
-    const usersPerpage = 6;
+    const usersPerpage = 3;
 
     useEffect(()=>{
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
     }, [sessionId]);
 
     useEffect(()=>{
-        if(query === "") {
+        if(query === "" || query === "show all") {
             setIsLoading(true);
             getUsers(1, usersPerpage).then(res => {
                 setUsers(res);
@@ -39,14 +38,22 @@ export const TweetsPage = () => {
 
         if(query === "followings") {
             setUsers(followedUsers);
-        }
-    }, [query, followedUsers]);
+            setIsLoading(false);
+        };
+
+        if(query === "follow") {
+            getAllUsers().then(res => {
+                const arr = res.filter(user => !user.followersArray.includes(sessionId));
+                setUsers(arr);
+                setIsLoading(false);
+            })
+        };
+    }, [query, followedUsers, sessionId]);
 
     useEffect(()=>{
         if(sessionId === ''){
             setNewSession().then(res => {
                 setSessionId(res.id);
-                console.log('set session');
             }).catch(error => {
                 console.log(error);
             });
@@ -78,28 +85,9 @@ export const TweetsPage = () => {
 
     const filterUsers = async (filter) => {
         setPage(1);
+        //setUsers([]);
         setIsLoading(true);
         updateQueryString(filter);
-        switch (filter) {
-            case 'show all':
-                getUsers(1, usersPerpage).then(res => {
-                    setUsers(res);
-                    setIsLoading(false);
-                }).catch(error => {
-                    console.log(error);
-                });
-                break;
-            case 'follow':
-                console.log('2');
-                break;
-            case 'followings':
-                setUsers(followedUsers);
-                setIsLoading(false);
-                break;
-        
-            default:
-                break;
-        }
     };
 
     return(

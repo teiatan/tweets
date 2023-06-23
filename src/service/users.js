@@ -27,3 +27,8 @@ export async function updateUser(id, newData) {
     return data;
 };
 
+export async function getAllUsers() {
+    const { data } = await axios.get(`users`);
+    return data;
+};
+
