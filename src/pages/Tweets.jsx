@@ -3,7 +3,7 @@ import { TweetsFilter } from "components/TweetsFilter/TweetsFilter";
 import { UsersList } from "components/UsersList/UsersList";
 import { TbArrowBack } from 'react-icons/tb';
 import { GoBackButton, HandleBar } from "./Tweets.styled";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAllUsers, getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
@@ -15,6 +15,7 @@ export const TweetsPage = () => {
     const [users, setUsers] = useState([]);
     const [followedUsers, setFollowedUsers] = useState([]);
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('query') || "";
@@ -25,12 +26,18 @@ export const TweetsPage = () => {
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
     }, [sessionId]);
 
+    const firstRender = useRef(true);
     useEffect(()=>{
+        if(firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
         if(query === "" || query === "show all") {
             setIsLoading(true);
             getUsers(page, usersPerpage).then(res => {
                 setUsers((prev) => ([...prev, ...res]));
                 setIsLoading(false);
+                setTotalPages(Math.ceil(100/usersPerpage));
             }).catch(error => {
                 console.log(error);
             });
@@ -40,6 +47,7 @@ export const TweetsPage = () => {
             const arr = followedUsers.slice((page-1)*usersPerpage, (page-1)*usersPerpage+usersPerpage);
             setUsers((prev) => ([...prev, ...arr]));
             setIsLoading(false);
+            setTotalPages(Math.ceil(followedUsers.length/usersPerpage));
         };
 
         if(query === "follow") {
@@ -48,6 +56,7 @@ export const TweetsPage = () => {
                 const arr = all.slice((page-1)*usersPerpage, (page-1)*usersPerpage+usersPerpage);
                 setUsers((prev) => ([...prev, ...arr]));
                 setIsLoading(false);
+                setTotalPages(Math.ceil(all.length/usersPerpage));
             })
         };
     }, [query, followedUsers, sessionId, usersPerpage, page]);
@@ -113,7 +122,7 @@ export const TweetsPage = () => {
 
             {isLoading && <Loader />}
 
-            {(page<(100/usersPerpage)) && !isLoading && 
+            {(page<totalPages) && !isLoading && 
                 <LoadMoreButton onClick={handleLoadMore}>
                     Load more
                 </LoadMoreButton>
