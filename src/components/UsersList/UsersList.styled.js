@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { device } from "utils/mediaQueries";
 
 export const CardsContainer = styled.ul`
-  margin-top: 20px;
+  margin-top: 150px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

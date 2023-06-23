@@ -1,24 +1,17 @@
 import styled from "@emotion/styled";
 
-export const HandleBar = styled.div`
-    padding-top: 80px;
-    padding-bottom: 20px;
+export const Home = styled.div`
+    height: calc(100vh - 60px);
+    margin-top: 60px;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%,0);
-    width: 100vw;
-    background-color: #E2E0F8;
-    z-index: 9;
-    /* box-shadow:   0px -16px 79px 25px rgba(226,224,248,0.88); */
+    align-items: center;
+    background: radial-gradient(circle, rgba(82,49,159,1) 0%, rgba(129,101,193,1) 34%, rgba(235,216,255,1) 69%, rgba(226,224,248,1) 100%);
 `;
 
-export const GoBackButton = styled.button`
+export const StyledButton = styled.button`
     width: 200px;
-    height: 50px;
+    height: 200px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -27,7 +20,7 @@ export const GoBackButton = styled.button`
     line-height: 22px;
     color: #EBD8FF;
     border: none;
-    border-radius: 10px;
+    border-radius: 50%;
     text-transform: uppercase;
     background: linear-gradient(
                 114.99deg,

@@ -16,8 +16,7 @@ export const StyledHeader = styled.header`
             #471ca9 -0.99%,
             #5736a3 54.28%,
             #4b2a99 78.99%);;
-    border-bottom: 1px solid gray;
-    box-shadow: 2px 3px 5px lightgrey;  
+ 
 `;
 
 export const StyledNavList = styled.ul`

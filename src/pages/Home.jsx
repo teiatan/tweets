@@ -1,24 +1,17 @@
 import { PageContainer } from "components/PageContainer/PageContainer";
-import { useEffect } from "react";
-import { getUsers, updateUserFollowers } from "service/users";
+import { Link } from "react-router-dom";
+import { Home, StyledButton } from "./Home.styled";
 
 const HomePage = () => {
 
-    useEffect(()=>{
-        getUsers(1, 10).then(res => {
-            console.log(res);
-        }).catch(error => {
-        // handle error
-        });
-        updateUserFollowers(1, 111).then(res => {
-            console.log(res);
-        }).catch(error => {
-        // handle error
-        });
-    })
+
     return(
         <PageContainer>
-            <h1>Homepage</h1>
+            <Home>
+                <Link to="/tweets"><StyledButton>
+                    let's tweet
+                </StyledButton></Link>
+            </Home>
         </PageContainer>
     );
 };

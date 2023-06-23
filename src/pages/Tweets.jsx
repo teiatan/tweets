@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
+import { Link } from "react-router-dom";
 
 export const TweetsPage = () => {
     const [users, setUsers] = useState([]);
@@ -44,10 +45,10 @@ export const TweetsPage = () => {
     return(
         <PageContainer>
             <HandleBar>
-                <GoBackButton>
+               <Link to='/'><GoBackButton>
                     <TbArrowBack color='#EBD8FF'/>
                     Go back
-                </GoBackButton>
+                </GoBackButton></Link>
                 <TweetsFilter />
             </HandleBar>   
             <UsersList 
