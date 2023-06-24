@@ -27,7 +27,8 @@ export const TweetsPage = () => {
     useEffect(()=>{
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
 
-        if(sessionId === ''){
+        if(sessionId === '' || !sessionId){
+            console.log('go');
             setNewSession().then(res => {
                 setSessionId(res.id);
             }).catch(error => {
@@ -44,6 +45,10 @@ export const TweetsPage = () => {
     }, [sessionId]);
 
     useEffect(()=>{
+        if(sessionId === "") {
+            return;
+        };
+
         if(query === "" || query === "show all") {
             setIsLoading(true);
             getUsers(page, usersPerpage).then(res => {
