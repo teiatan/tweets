@@ -34,8 +34,7 @@ includes information about sessions from different gadgets
 This project was 
 - bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 - styled with [@emotion](https://emotion.sh/docs/introduction) and [React Icons](https://react-icons.github.io/react-icons/)
-- roted with [React Router](https://reactrouter.com/en/main)
-- created using [Redux Toolkit](https://redux-toolkit.js.org/)
+- routed with [React Router](https://reactrouter.com/en/main)
 - provided with backend using [mockapi](https://mockapi.io/)
 
 Here are:
@@ -43,6 +42,4 @@ Here are:
 
 ## Run the app in the development mode
 
-In the project directory run:
-### `npm start`
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+In the project directory run `npm start`, open [http://localhost:3000](http://localhost:3000) to view it in your browser.
