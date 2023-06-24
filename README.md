@@ -13,9 +13,9 @@ includes action button, can be customized to parent source during implementation
 includes cards of users and provides next functionality:
 
 1. Adaptive card gallery
-2. Each card user can be followed independantly from different gadgets and session
-3. Amount of followers depends and changes accoarding to last api data
-4. Cards can be filtered to 3 categories: show all, follow and followings (logic of getting follow onces doesn`t use best practices because of mockapi limits and should be replaced in real project)
+2. Each card user can be followed independently from different gadgets and session
+3. Amount of followers depends and changes according to last api data
+4. Cards can be filtered to 3 categories: show all, follow and followings (logic of getting follow ones doesn`t use best practices because of mockapi limits and should be replaced in real project)
 5. Cards are shown dosed and can be loaded more by clicking corresponded button
 6. Data saves after reloading page
 
