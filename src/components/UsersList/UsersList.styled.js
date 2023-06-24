@@ -5,7 +5,7 @@ export const CardsContainer = styled.ul`
   margin-top: 150px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 30px;
 
   ${device.mobile}{

@@ -1,17 +1,15 @@
+import PropTypes from 'prop-types';
 import { useState } from "react";
-import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
-import { Container, StyledButton, StyledItem, StyledList } from "./TweetsFilter.styled";
 import { useSearchParams } from "react-router-dom";
-
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { filterVariants } from "utils/variables.js";
+import { Container, StyledButton, StyledItem, StyledList } from "./TweetsFilter.styled";
 
 export const TweetsFilter = ({filterUsers}) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query') || "filter";
     const [choosedFilter, setChoosedFilter] = useState(query);
-
-
-    const filterVariants = ['show all', 'follow', 'followings']
 
     const handleFilterOptionClick = (variant) => {
         setIsFilterOpen(false);
@@ -45,4 +43,8 @@ export const TweetsFilter = ({filterUsers}) => {
             </StyledList>}
         </Container>
     )
+};
+
+TweetsFilter.propTypes = {
+    filterUsers: PropTypes.func
 }

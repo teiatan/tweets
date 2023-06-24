@@ -13,7 +13,6 @@ export const HandleBar = styled.div`
     width: 100vw;
     background-color: #E2E0F8;
     z-index: 9;
-    /* box-shadow:   0px -16px 79px 25px rgba(226,224,248,0.88); */
 `;
 
 export const GoBackButton = styled.button`

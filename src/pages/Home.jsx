@@ -1,5 +1,5 @@
-import { PageContainer } from "components/PageContainer/PageContainer";
 import { Link } from "react-router-dom";
+import { PageContainer } from "components/PageContainer/PageContainer";
 import { Home, StyledButton } from "./Home.styled";
 
 const HomePage = () => {

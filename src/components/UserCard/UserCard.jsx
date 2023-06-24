@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { Container, Button, Avatar, Info } from './UserCard.styled';
 import { getUserById } from 'service/users';
 import { getStringsArrayAfterTogglingItem } from 'utils/getArrayAfterTogglingItem';
+import { Container, Button, Avatar, Info } from './UserCard.styled';
 
 export const UserCard = ({tweets, followers, avatar, id, isFollowing, handleChangingSessionDB, handleChangingUsersDB, sessionId}) => {
 
@@ -34,5 +34,10 @@ export const UserCard = ({tweets, followers, avatar, id, isFollowing, handleChan
 UserCard.propTypes = {
   tweets: PropTypes.number, 
   followers: PropTypes.number, 
-  avatar: PropTypes.string
+  avatar: PropTypes.string,
+  id: PropTypes.string,
+  isFollowing: PropTypes.bool, 
+  handleChangingSessionDB: PropTypes.func,
+  handleChangingUsersDB: PropTypes.func,
+  sessionId: PropTypes.string
 };

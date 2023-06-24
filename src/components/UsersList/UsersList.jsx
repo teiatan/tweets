@@ -1,8 +1,8 @@
-import { UserCard } from "components/UserCard/UserCard";
-import { CardsContainer } from "./UsersList.styled";
-import { getObjectsArrayAfterTogglingItem } from "utils/getArrayAfterTogglingItem";
 import { updateSessionFollowers } from "service/sessions";
 import { updateUser } from "service/users";
+import { getObjectsArrayAfterTogglingItem } from "utils/getArrayAfterTogglingItem";
+import { UserCard } from "components/UserCard/UserCard";
+import { CardsContainer } from "./UsersList.styled";
 
 export const UsersList = ({users, setUsers, followedUsers, setFollowedUsers, sessionId}) => {
 

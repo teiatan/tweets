@@ -7,16 +7,6 @@ export async function getUsers(page, amount) {
     return data;
 };
 
-export async function updateUserFollowers(id, newFollowers) {
-    const { data } = await axios.put(`users/${id}`, {followers: newFollowers});
-    return data;
-};
-
-export async function getUserFollowers(id) {
-    const { data } = await axios.put(`users/${id}`);
-    return data.followers;
-};
-
 export async function getUserById(id) {
     const { data } = await axios.put(`users/${id}`);
     return data;
@@ -31,4 +21,3 @@ export async function getAllUsers() {
     const { data } = await axios.get(`users`);
     return data;
 };
-

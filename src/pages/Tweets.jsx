@@ -1,29 +1,46 @@
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { TbArrowBack } from 'react-icons/tb';
+import { getSessionFollowers, setNewSession } from "service/sessions";
+import { getAllUsers, getUsers } from "service/users";
 import { PageContainer } from "components/PageContainer/PageContainer";
 import { TweetsFilter } from "components/TweetsFilter/TweetsFilter";
 import { UsersList } from "components/UsersList/UsersList";
-import { TbArrowBack } from 'react-icons/tb';
-import { GoBackButton, HandleBar } from "./Tweets.styled";
-import { useEffect, useState } from "react";
-import { getAllUsers, getUsers } from "service/users";
 import { Loader } from "components/Loader/Loader";
 import { LoadMoreButton } from "components/UsersList/UsersList.styled";
-import { Link, useSearchParams } from "react-router-dom";
-import { getSessionFollowers, setNewSession } from "service/sessions";
+import { GoBackButton, HandleBar } from "./Tweets.styled";
+import { usersPerpage } from "utils/variables.js";
+
 
 export const TweetsPage = () => {
     const [sessionId, setSessionId] = useState(() => JSON.parse(window.localStorage.getItem('sessionId')) ?? '');
     const [users, setUsers] = useState([]);
     const [followedUsers, setFollowedUsers] = useState([]);
+
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('query') || "";
 
-    const usersPerpage = 3;
-
     useEffect(()=>{
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
+
+        if(sessionId === ''){
+            setNewSession().then(res => {
+                setSessionId(res.id);
+            }).catch(error => {
+                console.log(error);
+            });
+        } else {
+            getSessionFollowers(sessionId).then(res => {
+                setFollowedUsers(res.followedUsers);
+            }).catch(error => {
+                console.log(error);
+                setSessionId('');
+            });
+        };
     }, [sessionId]);
 
     useEffect(()=>{
@@ -56,24 +73,7 @@ export const TweetsPage = () => {
                 setTotalPages(Math.ceil(all.length/usersPerpage));
             })
         };
-    }, [query, sessionId, usersPerpage, page]);
-
-    useEffect(()=>{
-        if(sessionId === ''){
-            setNewSession().then(res => {
-                setSessionId(res.id);
-            }).catch(error => {
-                console.log(error);
-            });
-        } else {
-            getSessionFollowers(sessionId).then(res => {
-                setFollowedUsers(res.followedUsers);
-            }).catch(error => {
-                console.log(error);
-                setSessionId('');
-            });
-        };
-    }, [sessionId]);
+    }, [query, sessionId, page]);
 
     const updateQueryString = (query) => {
         const nextParams = query !== "" ? { query } : {};
