@@ -28,7 +28,6 @@ export const TweetsPage = () => {
         window.localStorage.setItem('sessionId', JSON.stringify(sessionId));
 
         if(sessionId === '' || !sessionId){
-            console.log('go');
             setNewSession().then(res => {
                 setSessionId(res.id);
             }).catch(error => {
