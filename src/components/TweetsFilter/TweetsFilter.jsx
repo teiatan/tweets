@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { filterVariants } from "utils/variables.js";
@@ -31,14 +31,14 @@ export const TweetsFilter = ({filterUsers}) => {
             </StyledButton>
             {isFilterOpen && <StyledList>
                 {filterVariants.map(variant => {
-                    return (
-                        <StyledItem 
-                            key={variant}
+                    return (<React.Fragment key={variant}>
+                        {(choosedFilter !== variant) && <StyledItem 
+                            
                             onClick={()=>handleFilterOptionClick(variant)}
                         >
                                 {variant}
-                        </StyledItem>
-                    )
+                        </StyledItem>}
+                    </React.Fragment>);
                 })}
             </StyledList>}
         </Container>
